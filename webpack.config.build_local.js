@@ -1,23 +1,23 @@
 var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
-var htmlWebpackPlugin = require('html-webpack-plugin'); //html的页面生成
-var untils=require('./untils.js');
+var htmlWebpackPlugin = require('html-webpack-plugin'); //html的页面生产
 var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独生成--只有build使用
 var CleanPlugin = require('clean-webpack-plugin'); // 删除文件夹--只有build使用
-var prodWebpackConfig = {
+module.exports = {
     // context:,
-    // entry: {
-    //     layer1: './src/pages/layer1/index.js',
-    //     layer2: './src/pages/layer2/index.js',
-    //     layer3: './src/pages/layer3/index.js',
-    // },
-    entry: untils.entry,
+    entry: {
+        layer1: './src/pages/layer1/index.js',
+        layer2: './src/pages/layer2/index.js',
+        layer3: './src/pages/layer3/index.js',
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         // filename: '[name].js',
         filename: 'js/[name]-[chunkhash].js',
         //publicPath: 'http://cdn.com/'
+        // filename: utils.assetsPath('[name]-[chunkhash].js'),
+        // chunkFilename: utils.assetsPath('[id]-[chunkhash].js')
     },
     devtool: '#source-map', //生成map文件----只有build使用
     module: {
@@ -68,24 +68,39 @@ var prodWebpackConfig = {
                 }
             }
         }),
+        new htmlWebpackPlugin({
+            // filename:'index-[hash].html',
+            filename: 'layer1.html', //页面的生产名字
+            template: 'index.ejs', //页面模板
+            title: 'webpack is layer1', //网页title
+            inject: 'body', //js的存放位置
+            chunks: ['layer1'], //引入的js
+            // minify:{//html页面压缩
+            //  removeComments:true,//删除注释
+            //  collapseWhitespace:true//删除空格
+            // }
+        }),
+        new htmlWebpackPlugin({
+            filename: 'layer2.html',
+            template: 'index.ejs',
+            title: 'webpack is layer2',
+            inject: 'body',
+            chunks: ['layer2'],
+            // minify:{
+            //  removeComments:true,//删除注释
+            //  collapseWhitespace:true//删除空格
+            // }
+        }),
+        new htmlWebpackPlugin({
+            filename: 'layer3.html',
+            template: 'index.ejs',
+            title: 'webpack is layer3',
+            inject: 'body',
+            chunks: ['layer3'],
+            // minify:{
+            //  removeComments:true,//删除注释
+            //  collapseWhitespace:true//删除空格
+            // }
+        }),
     ]
 };
-//生存多个页面
-var appConfig = require('./Pages.js');
-appConfig.pages.forEach(function(page) {
-    var conf = {
-        template: page.template || 'src/templates/vue.ejs', // html模板路径
-        title: page.title || '多页面测试',
-        filename: page.filename + '.html', // 生成的html存放路径,文件名，相对于path
-        chunks: [page.chunks],
-        inject: 'body', // //js插入的位置
-        hash: false,
-        minify: { // 压缩HTML文件
-            // removeComments: true,       // 移除HTML中的注释
-            // collapseWhitespace: false,   // 删除空白符与换行符
-            // removeAttributeQuotes: true
-        },
-    }
-    prodWebpackConfig.plugins.push(new htmlWebpackPlugin(conf))
-});
-module.exports = prodWebpackConfig;
