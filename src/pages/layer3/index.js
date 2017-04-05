@@ -1,4 +1,9 @@
-import tpl from './layer.html';
-import './layer.less';
-var dom = document.getElementById('app');
-dom.innerHTML = tpl
+import Vue from 'vue';
+import App from './layer.vue';
+
+
+new Vue({
+    el: '#app',
+    template: '<App/>',
+    components: { App }
+})
