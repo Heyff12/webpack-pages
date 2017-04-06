@@ -1,12 +1,14 @@
+//在执行npm run build之前，限执行图片压缩，依次执行--gulp del;gulp images
 var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var htmlWebpackPlugin = require('html-webpack-plugin'); //html的页面生成
-var untils = require('./untils.js');
+var untils = require('./untils.js'); // 全局变量配置
 var px2rem = require('postcss-px2rem'); //css像素自适应--移动端页面需要
-var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独生成--只有build使用
-var WebpackBrowserPlugin = require('webpack-browser-plugin'); //自动在浏览器打开页面--只有dev使用--本例没有使用
-var prodWebpackConfig = {
+var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独生成
+
+
+var baseWebpackConfig = {
     // context:,
     // entry: './src_much/script/main.js',//一个js文件--single entry
     // entry:['./src_much/script/main.js','./src_much/script/a.js'],//两个js文件 合并
@@ -17,15 +19,9 @@ var prodWebpackConfig = {
     // },
     entry: untils.entry,
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js',
-        // filename: 'js/[name]-[chunkhash].js',
-        //publicPath: 'http://cdn.com/'
-    },
-    devServer: {
-        port: 8083,
-        inline: true,
-        //colors: true, //终端中输出结果为彩色
+        path: path.resolve(__dirname, '../dist'),
+        // filename: '[name].js',
+        filename: 'js/[name]-[hash].js',
     },
     resolve: {
         extensions: ['.js', '.vue', '.css', '.json'],
@@ -72,11 +68,12 @@ var prodWebpackConfig = {
         }, {
             test: /\.css$/,
             loader: 'style-loader!css-loader?importLoaders=1!postcss-loader',
-            //loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+            //loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!postcss-loader' })
             // loaders:['style-loader','css-loader','postcss-loader']
         }, {
             test: /\.less$/,
-            loader: 'style-loader!css-loader!postcss-loader!less-loader',
+            //loader: 'style-loader!css-loader!postcss-loader!less-loader',           
+            loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!postcss-loader!less-loader' }), //写法不同----只有build使用
         }, {
             test: /\.json$/,
             loader: 'json-loader',
@@ -112,7 +109,6 @@ var prodWebpackConfig = {
     //     }
     // }
     plugins: [
-        new WebpackBrowserPlugin(),
         //new webpack.BannerPlugin('# coding: utf-8'),//在js的头部增加信息
         new webpack.LoaderOptionsPlugin({
             options: {
@@ -127,10 +123,12 @@ var prodWebpackConfig = {
                 },
             }
         }),
+        new ExtractTextPlugin('css/[name].[contenthash].css'),
+        //new webpack.optimize.CommonsChunkPlugin('common.js') //将公用模块，打包进common.js---报错
     ]
 };
 //生存多个页面
-var appConfig = require('./Pages.js');
+var appConfig = require('../Pages.js');
 appConfig.pages.forEach(function(page) {
     var conf = {
         template: page.template || 'src/index.ejs', // html模板路径
@@ -140,11 +138,11 @@ appConfig.pages.forEach(function(page) {
         inject: 'body', // //js插入的位置
         hash: false,
         minify: { // 压缩HTML文件
-            removeComments: true,       // 移除HTML中的注释
-            collapseWhitespace: false,   // 删除空白符与换行符
+            removeComments: true, // 移除HTML中的注释
+            collapseWhitespace: false, // 删除空白符与换行符
             removeAttributeQuotes: true
         },
     }
-    prodWebpackConfig.plugins.push(new htmlWebpackPlugin(conf))
+    baseWebpackConfig.plugins.push(new htmlWebpackPlugin(conf))
 });
-module.exports = prodWebpackConfig;
+module.exports = baseWebpackConfig;

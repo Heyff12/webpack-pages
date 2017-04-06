@@ -6,8 +6,8 @@ import './layer.less';
 const App = function() {
     var dom = document.getElementById('app');
     dom.innerHTML = tpl({
-        name: 'layer22222222222222222222222222222',
-        arr: ['xiaomi', 'apple', 'pear']
+        name: 'layertest22222222222222222222222222222',
+        arr: ['xiaomi', 'apple', 'pear', 'orange']
     });
 }
 new App()

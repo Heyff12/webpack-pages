@@ -2,11 +2,15 @@ var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var htmlWebpackPlugin = require('html-webpack-plugin'); //html的页面生成
-var untils = require('./untils.js');
-var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独生成--只有build使用
-var CleanPlugin = require('clean-webpack-plugin'); // 删除文件夹--只有build使用
+var untils = require('./untils.js');// 获取入口文件
+var px2rem = require('postcss-px2rem'); //css像素自适应--移动端页面需要
+var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独生成
+var WebpackBrowserPlugin = require('webpack-browser-plugin'); //自动在浏览器打开页面--只有dev使用
+
 var prodWebpackConfig = {
     // context:,
+    // entry: './src_much/script/main.js',//一个js文件--single entry
+    // entry:['./src_much/script/main.js','./src_much/script/a.js'],//两个js文件 合并
     // entry: {
     //     layer1: './src/pages/layer1/index.js',
     //     layer2: './src/pages/layer2/index.js',
@@ -16,14 +20,20 @@ var prodWebpackConfig = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         // filename: '[name].js',
-        filename: 'js/[name]-[chunkhash].js',
-        //publicPath: 'http://cdn.com/'
+        filename: 'js/[name]-[hash].js',
+        publicPath: 'http://localhost:8083/dist/',//填写后，能够让引入资源的路径变成绝对定位
     },
-    devtool: '#source-map', //生成map文件----只有build使用
+    devServer: {
+        port: 8083,
+        inline: true,
+        // colors: true, //终端中输出结果为彩色
+        // hot: true,
+        //progress:true,
+    },//仅config使用
     resolve: {
         extensions: ['.js', '.vue', '.css', '.json'],
         alias: {
-            'vue$': 'vue/dist/vue.common.js', //加上这个，.vue才能实现
+            'vue$': 'vue/dist/vue.common.js',
             'src': path.resolve(__dirname, 'src'),
             'assets': path.resolve(__dirname, 'src/assets'),
         }
@@ -42,6 +52,9 @@ var prodWebpackConfig = {
             loader: 'html-loader',
         }, {
             test: /\.tpl$/,
+            loader: 'ejs-loader',
+        }, {
+            test: /\.ejs$/,
             loader: 'ejs-loader',
         }, {
             test: /\.vue$/,
@@ -66,7 +79,7 @@ var prodWebpackConfig = {
             // loaders:['style-loader','css-loader','postcss-loader']
         }, {
             test: /\.less$/,
-            //loader: 'style-loader!css-loader!postcss-loader!less-loader',            
+            //loader: 'style-loader!css-loader!postcss-loader!less-loader',           
             loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!postcss-loader!less-loader' }), //写法不同----只有build使用
         }, {
             test: /\.json$/,
@@ -89,12 +102,26 @@ var prodWebpackConfig = {
             }
         }]
     },
+    // vue: {
+    //     postcss: [require('postcss-px2rem')({
+    //         baseDpr: 2, // base device pixel ratio (default: 2)
+    //         threeVersion: false, // whether to generate @1x, @2x and @3x version (default: false)
+    //         remVersion: true, // whether to generate rem version (default: true)
+    //         remUnit: 75, // rem unit value (default: 75)
+    //         remPrecision: 6 // rem precision (default: 6)
+    //     })],
+    //     autoprefixer: {
+    //         browsers: ["Android >= 2.3", "iOS >= 6"],
+    //         cascade: false // 不美化输出 css
+    //     }
+    // }
     plugins: [
-        new CleanPlugin(['dist']),
+        new WebpackBrowserPlugin(),
+        //new webpack.BannerPlugin('# coding: utf-8'),//在js的头部增加信息
         new webpack.LoaderOptionsPlugin({
             options: {
                 postcss: function() {
-                    // return [autoprefixer({ browsers: ['last 5 versions'] }), px2rem({ remUnit: 37.5 })];//手机端
+                    // return [autoprefixer({ browsers: ['last 5 versions'] }), px2rem({ remUnit: 37.5 })];
                     return [autoprefixer({ browsers: ['last 5 versions'] })];
                 },
                 vue: {
@@ -105,7 +132,6 @@ var prodWebpackConfig = {
             }
         }),
         new ExtractTextPlugin('css/[name].[contenthash].css'),
-        //new webpack.BannerPlugin(''),//在js的头部增加信息
     ]
 };
 //生存多个页面
@@ -119,8 +145,8 @@ appConfig.pages.forEach(function(page) {
         inject: 'body', // //js插入的位置
         hash: false,
         minify: { // 压缩HTML文件
-            removeComments: true, // 移除HTML中的注释
-            collapseWhitespace: false, // 删除空白符与换行符
+            removeComments: true,       // 移除HTML中的注释
+            collapseWhitespace: false,   // 删除空白符与换行符
             removeAttributeQuotes: true
         },
     }
