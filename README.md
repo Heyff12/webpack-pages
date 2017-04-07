@@ -57,10 +57,15 @@ npm run build
 
 ## 备注  
 1、配置多页面时，需要显示不同的title（<%= htmlWebpackPlugin.options.title %>），本例的模板文件是src/index.ejs；由于html格式不识别title的那段自定义代码，所以多个页面共享同一个模板时，不能采用html格式的文件  
+
 2、less代码经过less-loader处理后，没有被转化成base64编码的图片路径会默认到dist/css/img，导致图片不能显示。本例比较笨拙的处理方法：在运行dev时，配置 （publicPath: 'http://localhost:8083/dist/'），这样通过本地地址访问时，图片路径就会是 http://localhost:8083/dist/img;在运行build时，配置（publicPath_build: ''//填写后，能够让引入资源的路径变成绝对定位,例如“/qudao/v1/static”），这样可以让资源路径根据线上环境自动调整  
+
 3、引入代码检测（eslint-loader），需要在根目录配置.eslintrc文件  
-4、正常编译.vue文件，需要在resolve中添加'vue$': 'vue/dist/vue.common.js', （目前不少特别理解resolve的用法） 
-5、单页面配置项目https://github.com/Heyff12/webpack-demo  
+
+4、正常编译.vue文件，需要在resolve中添加'vue$': 'vue/dist/vue.common.js', （目前不少特别理解resolve的用法）  
+
+5、单页面配置项目https://github.com/Heyff12/webpack-demo   
+ 
 
 
 
