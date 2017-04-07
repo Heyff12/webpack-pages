@@ -47,12 +47,19 @@ npm run build
 ## 功能解析 
 这个项目，是为了熟悉webpack的打包，是从无到有一点一点配置起来的，需要什么功能就安装声明模块，  
 大致步骤——  
+
 1、js模块化的实现和es6的编译(babel-loader)、less编译(style-loader/css-loader!postcss-loader!less-loader)、配置版本号(filename: 'js/[name]-[hash].js',)、图片base64处理(url-loader)，可以生产html文件查看（new htmlWebpackPlugin(conf)）  
+
 2、配置不同的页面模板，html/tpl/vue（html-loader/ejs-loader/vue-loader）  
-3、如果做移动端界面，需要css的rem转化 (postcss-px2rem) 
+
+3、如果做移动端界面，需要css的rem转化 (postcss-px2rem)  
+
 4、文件压缩（build命令的-p）  
-5、自动更新（webpack-dev-server），目前本例的bug,修改less文件不能够自动更新 
+
+5、自动更新（webpack-dev-server），目前本例的bug,修改less文件不能够自动更新  
+
 6、生成map文件，便于代码差错（devtool: '#source-map'）  
+
 
 
 ## 备注  
@@ -65,7 +72,11 @@ npm run build
 4、正常编译.vue文件，需要在resolve中添加'vue$': 'vue/dist/vue.common.js', （目前不少特别理解resolve的用法）  
 
 5、单页面配置项目https://github.com/Heyff12/webpack-demo   
- 
+
+
+
+
+
 
 
 
