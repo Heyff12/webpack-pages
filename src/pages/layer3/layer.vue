@@ -17,9 +17,10 @@
                 <p v-if="show">Look at me!</p>
             </transition>
         </div>
+        <div class="clearfix"></div>
         <div class="example">{{ msg }}</div>
-        <img src="../../assets/218.png">
         <div class="layer">
+            <img src="../../assets/218.png">
             <div>this is a layer333333333</div>
         </div>
         <div class="layer1">
@@ -50,17 +51,18 @@ export default {
                 console.log(e);
                 console.log(e.target);
             },
-            key_enter:function(){
+            key_enter: function() {
                 console.log('点击了enter键');
             },
         },
 }
 </script>
-<style lang="less" rel="stylesheet/less">
+<style lang="less"  type="less" rel="stylesheet/less">
 @import './modal.less';
 #demo_transition {
     width: 100%;
     height: 200px;
+    background-color: pink;
 }
 
 .fade-enter-active,
@@ -125,13 +127,39 @@ export default {
     }
 }
 
+.generate-columns(4);
+.generate-columns(@n, @i: 1) when (@i =< @n) {
+    .column-@{i}{width: (@i * 100% / @n);}
+    .generate-columns(@n, (@i + 1));
+}
+
+.clearfix {
+    display: block;
+    zoom: 1;
+    &:after {
+        content: " ";
+        display: block;
+        font-size: 0;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+}
+
+.bordered {
+    border-top: dotted 1px red;
+    border-bottom: solid 2px red;
+}
+
 .layer {
     width: 600px;
     height: 340px;
     background: green;
+    .bordered;
     img {
         width: 200px;
         height: auto;
+        .bordered;
     }
     div {
         width: 350px;
