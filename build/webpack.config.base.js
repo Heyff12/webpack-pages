@@ -27,16 +27,24 @@ var baseWebpackConfig = {
         extensions: ['.js', '.vue', '.css', '.json'],
         alias: {
             'vue$': 'vue/dist/vue.common.js',
-            'src': path.resolve(__dirname, 'src'),
-            'assets': path.resolve(__dirname, 'src/assets'),
+            'src': path.resolve(__dirname, '../src'),
+            'assets': path.resolve(__dirname, '../src/assets'),
         }
     },
     module: {
-        loaders: [{
+        rules: [
+        // {
+        //     test: /\.jsx?$/,
+        //     enforce: "pre",
+        //     loader: 'eslint-loader',
+        //     include: path.resolve(__dirname, '../'),
+        //     exclude: path.resolve(__dirname, '../node_modules')
+        // }, //代码规范检测--暂时不执行
+        {
             test: /\.jsx?$/,
             loader: 'babel-loader',
-            exclude: path.resolve(__dirname, 'node_modules'), //不需要babel编译的范围
-            include: path.resolve(__dirname, 'src'), //打包的范围
+            exclude: path.resolve(__dirname, '../node_modules'), //不需要babel编译的范围
+            include: path.resolve(__dirname, '../src'), //打包的范围
             query: {
                 presets: ['latest']
             }
@@ -95,19 +103,6 @@ var baseWebpackConfig = {
             }
         }]
     },
-    // vue: {
-    //     postcss: [require('postcss-px2rem')({
-    //         baseDpr: 2, // base device pixel ratio (default: 2)
-    //         threeVersion: false, // whether to generate @1x, @2x and @3x version (default: false)
-    //         remVersion: true, // whether to generate rem version (default: true)
-    //         remUnit: 75, // rem unit value (default: 75)
-    //         remPrecision: 6 // rem precision (default: 6)
-    //     })],
-    //     autoprefixer: {
-    //         browsers: ["Android >= 2.3", "iOS >= 6"],
-    //         cascade: false // 不美化输出 css
-    //     }
-    // }
     plugins: [
         //new webpack.BannerPlugin('# coding: utf-8'),//在js的头部增加信息
         new webpack.LoaderOptionsPlugin({
