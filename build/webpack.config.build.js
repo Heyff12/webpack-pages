@@ -15,14 +15,14 @@ module.exports = merge(configBase, {
     plugins: [
         new CleanPlugin(['dist'], {
             root: path.resolve(__dirname, '../')
-        }),
+        }),//删除dist文件夹
         new ImageminPlugin({
             //disable: false,
             test: path.resolve(__dirname, '../src/assets/**'),
             optipng: {
                 optimizationLevel: 6
             }
-        }),
+        }),//图片压缩
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'

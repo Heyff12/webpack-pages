@@ -14,7 +14,7 @@ module.exports = merge(configBase, {
         // colors: true, //终端中输出结果为彩色
         // hot: true,
         //progress:true,
-    }, //仅config使用
+    }, //仅config使用---配置本地路径端口
     plugins: [
         //new WebpackBrowserPlugin(),//打开浏览器，暂时不执行
         new webpack.DefinePlugin({

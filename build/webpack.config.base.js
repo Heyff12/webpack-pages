@@ -17,16 +17,16 @@ var baseWebpackConfig = {
     //     layer2: './src/pages/layer2/index.js',
     //     layer3: './src/pages/layer3/index.js',
     // },
-    entry: untils.entry,
+    entry: untils.entry,//多页面入口文件
     output: {
         path: path.resolve(__dirname, '../dist'),
         // filename: '[name].js',
-        filename: 'js/[name]-[hash].js',
+        filename: 'js/[name]-[hash].js',//生成的js地址和文件名称
     },
     resolve: {
         extensions: ['.js', '.vue', '.css', '.json'],
         alias: {
-            'vue$': 'vue/dist/vue.common.js',
+            'vue$': 'vue/dist/vue.common.js',//引入才能正常编译.vue
             'src': path.resolve(__dirname, '../src'),
             'assets': path.resolve(__dirname, '../src/assets'),
         }
@@ -61,13 +61,13 @@ var baseWebpackConfig = {
             test: /\.vue$/,
             loader: 'vue-loader',
             options: {
-                // postcss: [require('postcss-px2rem')({//移动端使用
+                // postcss: [require('postcss-px2rem')({
                 //     baseDpr: 2, // base device pixel ratio (default: 2)
                 //     threeVersion: false, // whether to generate @1x, @2x and @3x version (default: false)
                 //     remVersion: true, // whether to generate rem version (default: true)
                 //     remUnit: 75, // rem unit value (default: 75)
                 //     remPrecision: 6 // rem precision (default: 6)
-                // })],
+                // })],//移动端使用
                 autoprefixer: {
                     browsers: ["Android >= 2.3", "iOS >= 6"],
                     cascade: false // 不美化输出 css
@@ -108,7 +108,7 @@ var baseWebpackConfig = {
         new webpack.LoaderOptionsPlugin({
             options: {
                 postcss: function() {
-                    // return [autoprefixer({ browsers: ['last 5 versions'] }), px2rem({ remUnit: 37.5 })];
+                    // return [autoprefixer({ browsers: ['last 5 versions'] }), px2rem({ remUnit: 37.5 })];//移动端使用
                     return [autoprefixer({ browsers: ['last 5 versions'] })];
                 },
                 vue: {
@@ -117,8 +117,8 @@ var baseWebpackConfig = {
                     },
                 },
             }
-        }),
-        new ExtractTextPlugin('css/[name].[contenthash].css'),
+        }),//对于loader的补充
+        new ExtractTextPlugin('css/[name].[contenthash].css'),//单独提出css文件，生成到css文件夹
         //new webpack.optimize.CommonsChunkPlugin('common.js') //将公用模块，打包进common.js---报错
     ]
 };
