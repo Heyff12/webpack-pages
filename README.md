@@ -1,4 +1,4 @@
-# webpack-pages所页面应用
+# webpack-pages多页面应用
 1、包含js、less、图片、模板html/tpl/vue的压缩合并处理 ，版本控制，代码检测，自动更新（修改less暂时不能自动更新），图片压缩采用了gulp  
 
 2、config_single是单文件配置，webpack-config.sigle.js 是一个简单的单页面生产demo  
