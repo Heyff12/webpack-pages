@@ -6,9 +6,12 @@ exports.entry = (function() {
     glob.sync('./src/pages/*').forEach(function(name) {
         var n = name.slice(12, name.length - 0);
         appConfig.pages.forEach(function(page) {
-            entry[n] = name + '/index.js';
+            if (page.filename === n) {
+                entry[n] = name + '/index.js';
+            }
         })
     });
+    console.log(entry);
     return entry;
 })();
 // 获取常用配置

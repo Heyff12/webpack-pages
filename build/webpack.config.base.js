@@ -129,8 +129,8 @@ appConfig.pages.forEach(function(page) {
         template: page.template || 'src/index.ejs', // html模板路径
         title: page.title || '多页面测试',
         filename: page.filename + '.html', // 生成的html存放路径,文件名，相对于path
-        // chunks: ['manifest','vendor',page.chunks],
-        chunks: [page.chunks],
+        chunks: ['manifest','vendor',page.chunks],
+        // chunks: [page.chunks],
         inject: 'body', // //js插入的位置
         hash: false,
         minify: { // 压缩HTML文件
