@@ -16,20 +16,44 @@ module.exports = merge(configBase, {
     plugins: [
         new CleanPlugin(['dist'], {
             root: path.resolve(__dirname, '../')
-        }),//删除dist文件夹
+        }), //删除dist文件夹
         new ImageminPlugin({
             //disable: false,
             test: path.resolve(__dirname, '../src/assets/**'),
             optipng: {
                 optimizationLevel: 6
             }
-        }),//图片压缩
+        }), //图片压缩
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'
             },
             // RUN_ENV: JSON.stringify('production')
             RUN_ENV: JSON.stringify(untils.env)
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks: function(module, count) {
+                // any required modules inside node_modules are extracted to vendor
+                console.log(module.resource);
+                console.log(module.resource &&
+                    /\.js$/.test(module.resource) &&
+                    module.resource.indexOf(
+                        path.join(__dirname, '../node_modules')
+                    ) === 0);
+                // console.log(/\.js$/.test(module.resource));
+                // console.log(path.join(__dirname, '../node_modules'));
+                // console.log(module.resource.indexOf(
+                //   path.join(__dirname, '../node_modules')
+                // ) === 0);
+                return (
+                    module.resource &&
+                    /\.js$/.test(module.resource) &&
+                    module.resource.indexOf(
+                        path.join(__dirname, '../node_modules')
+                    ) === 0
+                )
+            }
         }),
         //报错
         // new webpack.optimize.UglifyJsPlugin({
