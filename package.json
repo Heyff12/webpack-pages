@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --config ./build/webpack.config.js --progress  --colors  --inline --hot",
-    "build": "gulp del && gulp images && webpack --config ./build/webpack.config.build.js --progress  --colors  --display-error-details -p && gulp images_copy",
+    "build": "gulp del && gulp images && webpack --config ./build/webpack.config.build.js --progress  --colors  --display-error-details  && gulp images_copy",    
+    "build0": "gulp del && gulp images && webpack --config ./build/webpack.config.build.js --progress  --colors  --display-error-details -p  && gulp images_copy",
     "webpack": "webpack --config ./build/webpack.config.js --progress --display-modules --colors --display-reasons --display-error-details --watch"
   },
   "author": "",

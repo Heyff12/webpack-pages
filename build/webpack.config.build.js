@@ -10,6 +10,7 @@ console.log(process.env.NODE_ENV);
 module.exports = merge(configBase, {
     output: {
         publicPath: untils.conf_detail.publicPath_build, //填写后，能够让引入资源的路径变成绝对定位,例如“/qudao/v1/static”
+        chunkFilename: utils.assetsPath('[id].[chunkhash].js')
     },
     devtool: '#source-map', //生成map文件----只有build使用
     plugins: [
