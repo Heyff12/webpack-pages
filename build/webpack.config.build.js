@@ -31,34 +31,34 @@ module.exports = merge(configBase, {
             // RUN_ENV: JSON.stringify('production')
             RUN_ENV: JSON.stringify(untils.env)
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            minChunks: function(module, count) {
-                // any required modules inside node_modules are extracted to vendor
-                console.log(module.resource);
-                console.log(module.resource &&
-                    /\.js$/.test(module.resource) &&
-                    module.resource.indexOf(
-                        path.join(__dirname, '../node_modules')
-                    ) === 0);
-                // console.log(/\.js$/.test(module.resource));
-                // console.log(path.join(__dirname, '../node_modules'));
-                // console.log(module.resource.indexOf(
-                //   path.join(__dirname, '../node_modules')
-                // ) === 0);
-                return (
-                    module.resource &&
-                    /\.js$/.test(module.resource) &&
-                    module.resource.indexOf(
-                        path.join(__dirname, '../node_modules')
-                    ) === 0
-                )
-            }
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'manifest',
-            chunks: ['vendor']
-        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'vendor',
+        //     minChunks: function(module, count) {
+        //         // any required modules inside node_modules are extracted to vendor
+        //         console.log(module.resource);
+        //         console.log(module.resource &&
+        //             /\.js$/.test(module.resource) &&
+        //             module.resource.indexOf(
+        //                 path.join(__dirname, '../node_modules')
+        //             ) === 0);
+        //         // console.log(/\.js$/.test(module.resource));
+        //         // console.log(path.join(__dirname, '../node_modules'));
+        //         // console.log(module.resource.indexOf(
+        //         //   path.join(__dirname, '../node_modules')
+        //         // ) === 0);
+        //         return (
+        //             module.resource &&
+        //             /\.js$/.test(module.resource) &&
+        //             module.resource.indexOf(
+        //                 path.join(__dirname, '../node_modules')
+        //             ) === 0
+        //         )
+        //     }
+        // }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'manifest',
+        //     chunks: ['vendor']
+        // }),
         //报错
         // new webpack.optimize.UglifyJsPlugin({
         //     compress: {
