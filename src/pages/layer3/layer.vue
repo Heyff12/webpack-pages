@@ -1,7 +1,7 @@
 <template>
     <div>
         {{ word | lowercase }} {{ amount | currency }}
-        <button class="b_click" v-on:key.enter="key_enter">点击enter键</button>
+        <button class="b_click" v-on:key.enter="key_enter">点击enter键5555</button>
         <button class="b_click" v-on:click="b_click($event)" v-on:key.enter="key_enter">测试$event参数</button>
         <div id="demo_transition">
             <button v-on:click="show = !show">
