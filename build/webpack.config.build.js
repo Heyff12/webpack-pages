@@ -55,6 +55,10 @@ module.exports = merge(configBase, {
                 )
             }
         }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest',
+            chunks: ['vendor']
+        }),
         //报错
         // new webpack.optimize.UglifyJsPlugin({
         //     compress: {
