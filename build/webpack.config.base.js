@@ -21,7 +21,7 @@ var baseWebpackConfig = {
     output: {
         path: path.resolve(__dirname, '../dist'),
         // filename: '[name].js',
-        filename: 'js/[name]-[hash].js',//生成的js地址和文件名称
+        filename: 'js/[name].[chunkhash].js',//生成的js地址和文件名称
     },
     resolve: {
         extensions: ['.js', '.vue', '.css', '.json'],

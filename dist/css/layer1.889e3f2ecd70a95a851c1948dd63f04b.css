@@ -1,0 +1,27 @@
+.layer1 .div {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-transform: rotate(34deg);
+      -ms-transform: rotate(34deg);
+          transform: rotate(34deg);
+}
+.layer {
+  width: 600px;
+  height: 340px;
+  background: pink;
+}
+.layer img {
+  width: 200px;
+  height: auto;
+}
+.layer div {
+  width: 350px;
+  height: 120px;
+  font-size: 37.5px;
+  border-top: 1px solid yellow;
+  /*no*/
+  background: url(img/218-1ca5f.png) top left no-repeat red;
+}
+
+/*# sourceMappingURL=layer1.889e3f2ecd70a95a851c1948dd63f04b.css.map*/
