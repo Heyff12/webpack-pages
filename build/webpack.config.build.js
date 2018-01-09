@@ -10,7 +10,7 @@ console.log(process.env.NODE_ENV);
 module.exports = merge(configBase, {
     output: {
         publicPath: untils.conf_detail.publicPath_build, //填写后，能够让引入资源的路径变成绝对定位,例如“/qudao/v1/static”
-        chunkFilename: 'js/[id].[chunkhash].js'
+        chunkFilename: 'js/[id].[chunkhash].js'//有这个的存在，manifest.js才不会根据每次都更改chunkhash
     },
     devtool: '#source-map', //生成map文件----只有build使用
     plugins: [
